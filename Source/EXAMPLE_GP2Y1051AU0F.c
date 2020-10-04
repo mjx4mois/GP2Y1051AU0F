@@ -6,11 +6,6 @@
      Create Date	: 2017/12/31
 ---------------------------------------------------------------------- */
 
-
-
-#ifndef __GP2Y1051AU0F_EXAMPLE__
-#define __GP2Y1051AU0F_EXAMPLE__
-
 #include <mega32a.h>
 #include <stdio.h>
 #include <delay.h>
@@ -131,4 +126,3 @@ void EXAMPLE_GP2Y1051AU0F(void)
 
                printf("--------------------  GP2Y1051AU0F dust sensor (PM2.5) --------------------\r\n");
 }
-#endif		//#ifndef __GP2Y1051AU0F_EXAMPLE__

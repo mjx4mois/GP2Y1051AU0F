@@ -5,18 +5,15 @@
      Function		: SENSOR_TGP2Y1051AU0F
      Create Date	: 2017/12/31
 ---------------------------------------------------------------------- */
-#ifndef __GP2Y1051AU0F_FUNCTION__
-#define __GP2Y1051AU0F_FUNCTION__  
-
 
 #include <stdio.h>
 #include <math.h>
 #include <delay.h>
 #include "SENSOR_GP2Y1051AU0F.h"
 
-#define GP2Y1010AU0F_DEBUG		0
+#define SENSOR_GP2Y1010AU0F_DEBUG		(0) /*if set "1" enable printf */
 
-//********************************************* SYSTEM *************************************************
+/********************************************** SYSTEM **************************************************/
 /*--------------------------------------------------------------------------------------------------*/
 /*
 	get GP2Y1051AU0F raw data form UART RX 
@@ -26,7 +23,7 @@
 */ 
 CHAR8S GP2Y1051AU0F_GET_RAW_DATA(FLOAT *raw_data)
 {
-#if GP2Y1010AU0F_DEBUG /* for debug */
+#if SENSOR_GP2Y1010AU0F_DEBUG /* for debug */
 		INT32U temp_data[3]={0};     
 #endif		
 
@@ -67,7 +64,7 @@ CHAR8S GP2Y1051AU0F_GET_RAW_DATA(FLOAT *raw_data)
 	     				/*check checksum ; if not equal -> read the next dust data */
 					check_sum = read_data[1] + read_data[2] + read_data[3] + read_data[4]; 
 						
-#if GP2Y1010AU0F_DEBUG /* for debug */
+#if SENSOR_GP2Y1010AU0F_DEBUG /* for debug */
 					printf("read data : %x %x %x %x %x %x %x\r\n",read_data[0],read_data[1],read_data[2],read_data[3],read_data[4],read_data[5],read_data[6]);
 					printf("calculate check sum : 0x%x , sensor check sum : 0x%x \r\n",check_sum,read_data[5]);
 #endif		
@@ -110,7 +107,7 @@ CHAR8S GP2Y1051AU0F_GET_RAW_DATA(FLOAT *raw_data)
 				voltage_adc_value = (read_data[1]*256 + read_data[2])   ;
 				voltage_data =  (FLOAT)voltage_adc_value / 1024 * 5; 	/* 5-> 5v   ; turn ADC value to voltage value */
 
-#if GP2Y1010AU0F_DEBUG 	/*for debug*/
+#if SENSOR_GP2Y1010AU0F_DEBUG 	/*for debug*/
 
 			temp_data[0]= (INT32U)(voltage_data);
 			temp_data[1]= (INT32U)(voltage_data*10)%10;   
@@ -129,7 +126,7 @@ CHAR8S GP2Y1051AU0F_GET_RAW_DATA(FLOAT *raw_data)
 void GP2Y1051AU0F_GET_DUST_VALUE(FLOAT *dust_data,FLOAT raw_data)
 {
 	
-#if GP2Y1010AU0F_DEBUG 	/*for debug*/
+#if SENSOR_GP2Y1010AU0F_DEBUG 	/*for debug*/
 	INT32U temp_data[3]={0};     
 #endif		
 
@@ -140,7 +137,7 @@ void GP2Y1051AU0F_GET_DUST_VALUE(FLOAT *dust_data,FLOAT raw_data)
 	/* formula :  dust_data(ug/m^3) =  (raw_data - 1.105) /gp2y1051au0f_slope + 400 */
 	calculate_dust_value =  ((raw_data - 1.105) /gp2y1051au0f_slope) + 400.0 ;
 
-#if GP2Y1010AU0F_DEBUG 	/*for debug*/
+#if SENSOR_GP2Y1010AU0F_DEBUG 	/*for debug*/
 
 		temp_data[0]= (INT32U)(calculate_dust_value);
 		temp_data[1]= (INT32U)(calculate_dust_value*10)%10;   
@@ -154,6 +151,4 @@ void GP2Y1051AU0F_GET_DUST_VALUE(FLOAT *dust_data,FLOAT raw_data)
 	
 }
 /*--------------------------------------------------------------------------------------------------*/
-//********************************************* SYSTEM *************************************************
-
-#endif //#ifndef __GP2Y1051AU0F_FUNCTION__ 
+/********************************************** SYSTEM **************************************************/
